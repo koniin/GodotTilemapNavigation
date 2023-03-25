@@ -9,7 +9,7 @@ var p2 = Vector2i(60, 30)
 
 func _ready():
 	path_finder = PathFinder.new(tile_map)
-	path_finder.setup_with_occupied_tiles()
+	path_finder.make_empty_tiles_pathable()
 	update_path()
 	
 func update_path():

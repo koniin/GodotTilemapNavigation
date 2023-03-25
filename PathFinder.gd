@@ -19,7 +19,7 @@ func _init(tilemap: TileMap):
 # - OR send in the size of the tilemap
 # then it adds all the tiles that are set as obstacles for the Astar algorithm
 # - that is all tiles that are not -1
-func setup_with_occupied_tiles(tilemap_size: Vector2i = Vector2i.ZERO):
+func make_empty_tiles_pathable(tilemap_size: Vector2i = Vector2i.ZERO):
 	var blocked_tiles = get_tilemap_occupied_tiles(tile_map)
 	var size = tilemap_size
 	if size == Vector2i.ZERO:
@@ -27,7 +27,6 @@ func setup_with_occupied_tiles(tilemap_size: Vector2i = Vector2i.ZERO):
 	add_all_by_size(size, blocked_tiles)
 
 func add_and_connect(walkable_points):
-	
 	var walkable_cells = {}
 	for p in walkable_points:
 		walkable_cells[cell_index(Vector2i(p.x, p.y))] = Vector2i(p.x, p.y)
