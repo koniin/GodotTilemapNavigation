@@ -1,5 +1,10 @@
 extends RefCounted
+
 class_name PathFinder
+
+# THIS CLASS IS ALL BASED ON:
+# https://www.gdquest.com/tutorial/godot/2d/tactical-rpg-movement/lessons/04.pathfinding-and-path-drawing/
+
 var _astar
 var tile_map
 
@@ -51,52 +56,32 @@ func get_tilemap_occupied_tiles(tilemap, cell_source_id = 0):
 
 func cell_index(vCell:Vector2i)->int:
 	return int(vCell.y + vCell.x * tile_map.get_used_rect().size.y)
-
-# Adds and connects the walkable cells to the Astar2D object.
+	
+func get_path(start: Vector2i, end: Vector2i):
+	var start_index: int = cell_index(start)
+	var end_index: int = cell_index(end)
+	if _astar.has_point(start_index) and _astar.has_point(end_index):
+		return _astar.get_point_path(start_index, end_index)
+	else:
+		return []
+		
 func _add_and_connect_points(cell_mappings: Dictionary) -> void:
-	# This function works with two loops. First, we register all our points in the AStar graph.
-	# We pass each cell's unique index and the corresponding Vector2 coordinates to the
-	# AStar2D.add_point() function.
 	for index in cell_mappings:
 		_astar.add_point(index, cell_mappings[index])
 
-	# Then, we loop over the points again, and we connect them with all their neighbors. We use
-	# another function to find the neighbors given a cell's coordinates.
 	for index in cell_mappings:
 		for neighbor_index in _find_neighbor_indices(cell_mappings[index], cell_mappings):
 			# The AStar2D.connect_points() function connects two points on the graph by index, *not*
 			# by coordinates.
 			_astar.connect_points(neighbor_index, index)
 			
-# Returns an array of the `cell`'s connectable neighbors.
 func _find_neighbor_indices(cell: Vector2i, cell_mappings: Dictionary) -> Array:
 	var out := []
-	# To find the neighbors, we try to move one cell in every possible direction and is ensure that
-	# this cell is walkable and not already connected.
 	for direction in DIRECTIONS:
 		var neighbor_pos: Vector2i = cell + direction
 		var n_index = cell_index(neighbor_pos)
-		# This line ensures that the neighboring cell is part of our walkable cells.
 		if not cell_mappings.has(n_index):
 			continue
-		# Because we call the function for every cell, we will get neighbors that are already
-		# connected. If you don't don't check for existing connections, you'll get many errors.
 		if not _astar.are_points_connected(cell_index(cell), n_index):
 			out.push_back(n_index)
 	return out
-	
-# Returns the path found between `start` and `end` as an array of Vector2 coordinates.
-func get_path(start: Vector2i, end: Vector2i):
-	# With the AStar algorithm, we have to use the points' indices to get a path. This is why we
-	# need a reliable way to calculate an index given some input coordinates.
-	# Our Grid.as_index() method does just that.
-	var start_index: int = cell_index(start)
-	var end_index: int = cell_index(end)
-	# We just ensure that the AStar graph has both points defined. If not, we return an empty
-	# PoolVector2Array() to avoid errors.
-	if _astar.has_point(start_index) and _astar.has_point(end_index):
-		# The AStar2D object then finds the best path between the two indices.
-		return _astar.get_point_path(start_index, end_index)
-	else:
-		return []
-		
