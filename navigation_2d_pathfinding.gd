@@ -2,11 +2,11 @@ extends Node2D
 
 @onready var navigation_agent: NavigationAgent2D = $Mover/NavigationAgent2D
 @onready var mover: Sprite2D = $Mover
+
 @export var movement_speed: float = 100.0
 
 var movement_delta: float
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	# !!! velocity_computed is only emitted if avoidance enabled = true !!!
 	navigation_agent.velocity_computed.connect(_on_velocity_computed)
