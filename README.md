@@ -4,6 +4,8 @@ Contains:
  * AStar pathfinding
  * NavigationAgent2D based pathfinding
 
+Thanks to Kenney for the assets - https://kenney.nl/assets/1-bit-pack
+
 ## Astar on a Tilemap
 
 You can use the PathFinder class as a drop in for your projects.
