@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxl6gp0iqiwj"]
+
+[ext_resource type="Script" path="res://PathFollower.gd" id="1_64r3n"]
+[ext_resource type="Texture2D" uid="uid://bi40kthsv1voa" path="res://assets/colored_packed.png" id="2_xqb25"]
+
+[node name="PathFollower" type="PathFollow2D"]
+position = Vector2(16, 120)
+script = ExtResource("1_64r3n")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_xqb25")
+region_enabled = true
+region_rect = Rect2(384, 112, 16, 17)
+
+[node name="27754" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true

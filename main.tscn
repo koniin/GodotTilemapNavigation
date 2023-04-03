@@ -22,3 +22,11 @@ offset_top = 256.0
 offset_right = 497.0
 offset_bottom = 287.0
 text = "Navigation2D Pathfinding"
+
+[node name="PathFollow" type="Button" parent="."]
+layout_mode = 0
+offset_left = 384.0
+offset_top = 320.0
+offset_right = 591.0
+offset_bottom = 351.0
+text = "Pathfollow Pathfinding"
