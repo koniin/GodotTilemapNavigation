@@ -5,6 +5,7 @@
 
 [node name="PathFollower" type="PathFollow2D"]
 position = Vector2(16, 120)
+rotates = false
 script = ExtResource("1_64r3n")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

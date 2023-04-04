@@ -10,6 +10,9 @@ func _ready():
 			
 		var p = load("res://path_follower.tscn")
 		var path_follower = p.instantiate()
+		var max_offset = 32.0
+		path_follower.v_offset = randf_range(-max_offset, max_offset)
+		path_follower.h_offset = randf_range(-max_offset, max_offset)
 		$Path2D.add_child(path_follower)
 		count += 1
 	)
